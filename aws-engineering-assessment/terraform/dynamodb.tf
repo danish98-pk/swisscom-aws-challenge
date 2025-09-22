@@ -1,3 +1,27 @@
+locals {
+  dynamodb_table_definition = {
+    TableName            = "file-metadata"
+    BillingMode          = "PAY_PER_REQUEST"
+    AttributeDefinitions = [
+      {
+        AttributeName = "Filename"
+        AttributeType = "S"
+      }
+    ]
+    KeySchema = [
+      {
+        AttributeName = "Filename"
+        KeyType       = "HASH"
+      }
+    ]
+    SSESpecification = {
+      Enabled        = true
+      SSEType        = "KMS"
+      KMSMasterKeyId = aws_kms_key.dynamodb_key.arn
+    }
+  }
+}
+
 #note:
 resource "aws_kms_key" "dynamodb_key" {
   description = "KMS key for DynamoDB table"
@@ -52,29 +76,20 @@ resource "aws_kms_key" "dynamodb_key" {
 }
 
 
-# resource "aws_dynamodb_table" "file_metadata" {
-#   name         = "file-metadata"
-#   billing_mode = "PAY_PER_REQUEST"
-#   hash_key     = "Filename"
 
-#   attribute {
-#     name = "Filename"
-#     type = "S"
-#   }
-
-#   server_side_encryption {
-#     enabled     = true
-#     kms_key_arn = aws_kms_key.dynamodb_key.arn
+#LocalStack making things worst for now , leveraging null resource { provisioner method}
+# resource "null_resource" "dynamodb_table" {
+#   provisioner "local-exec" {
+#     command = "aws --endpoint-url=http://localhost:4566 dynamodb create-table --table-name file-metadata --attribute-definitions AttributeName=Filename,AttributeType=S --key-schema AttributeName=Filename,KeyType=HASH --billing-mode PAY_PER_REQUEST  --sse-specification Enabled=true,SSEType=KMS,KMSMasterKeyId=${aws_kms_key.dynamodb_key.arn}"
 #   }
 # }
 
-
-#LocalStack making things worst for now , leveraging null resource { provisioner method}
 resource "null_resource" "dynamodb_table" {
   provisioner "local-exec" {
-    command = "aws --endpoint-url=http://localhost:4566 dynamodb create-table --table-name file-metadata --attribute-definitions AttributeName=Filename,AttributeType=S --key-schema AttributeName=Filename,KeyType=HASH --billing-mode PAY_PER_REQUEST  --sse-specification Enabled=true,SSEType=KMS,KMSMasterKeyId=${aws_kms_key.dynamodb_key.arn}"
+    command = "aws --endpoint-url=http://localhost:4566 dynamodb create-table --cli-input-json '${jsonencode(local.dynamodb_table_definition)}'"
   }
 }
+
 
 
 

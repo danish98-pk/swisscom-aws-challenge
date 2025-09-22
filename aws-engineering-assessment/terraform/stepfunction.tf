@@ -1,3 +1,19 @@
+#step function definition
+locals {
+  file_workflow_definition = jsonencode({
+    Comment = "File metadata workflow"
+    StartAt = "WriteMetadata"
+    States = {
+      WriteMetadata = {
+        Type     = "Task"
+        Resource = aws_lambda_function.write_metadata.arn
+        End      = true
+      }
+    }
+  })
+}
+
+
 resource "aws_iam_role" "sfn_role" {
   name = "sfn_role"
 
@@ -30,10 +46,19 @@ resource "aws_iam_role_policy" "sfn_policy" {
 
 resource "null_resource" "file_workflow" {
   provisioner "local-exec" {
-    command = "aws --endpoint-url=http://localhost:4566 stepfunctions create-state-machine --name FileUploadWorkflow --role-arn ${aws_iam_role.sfn_role.arn} --definition '{\"Comment\":\"File metadata workflow\",\"StartAt\":\"WriteMetadata\",\"States\":{\"WriteMetadata\":{\"Type\":\"Task\",\"Resource\":\"${aws_lambda_function.write_metadata.arn}\",\"End\":true}}}'"
+    command = "aws --endpoint-url=http://localhost:4566 stepfunctions create-state-machine --name FileUploadWorkflow --role-arn ${aws_iam_role.sfn_role.arn} --definition '${local.file_workflow_definition}'"
   }
 
   depends_on = [aws_lambda_function.write_metadata]
 }
+
+
+# resource "null_resource" "file_workflow" {
+#   provisioner "local-exec" {
+#     command = "aws --endpoint-url=http://localhost:4566 stepfunctions create-state-machine --name FileUploadWorkflow --role-arn ${aws_iam_role.sfn_role.arn} --definition '{\"Comment\":\"File metadata workflow\",\"StartAt\":\"WriteMetadata\",\"States\":{\"WriteMetadata\":{\"Type\":\"Task\",\"Resource\":\"${aws_lambda_function.write_metadata.arn}\",\"End\":true}}}'"
+#   }
+
+#   depends_on = [aws_lambda_function.write_metadata]
+# }
 
 
