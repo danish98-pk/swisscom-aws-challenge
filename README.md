@@ -300,7 +300,7 @@ You can verify the alert has been sent by looking at the path volume/tmp//state/
 
 
 #####
-To test StepFunction Error Handling { provided empty input to step function which will fail the lambda and stepfunction will do the error handling
+To test StepFunction Error Handling  , provided empty input to step function which will fail the lambda and stepfunction will do the error handling
 ```bash
 aws --endpoint-url=http://localhost:4566 stepfunctions start-execution \
   --state-machine-arn arn:aws:states:eu-central-1:000000000000:stateMachine:FileUploadWorkflow \
