@@ -291,7 +291,15 @@ list sns
  aws --endpoint-url=http://localhost:4566 sns list-topics \
   --region eu-central-1
 ```
+You can verify the alert has been sent by looking at the path volume/tmp//state/ses/ . You can cat the json file and see the ouput as mentioned below
+###Output
+```bash
+{"Id": "mxfthwwscyulscvr-hcxdfclb-vfxy-aglj-oovq-knnvxluzlvds-erzqjg", "Timestamp": "2025-09-22T09:59:42", "Region": "eu-central-1", "Source": "admin@localstack.com", "Destination": {"ToAddresses": ["awssecops123@gmail.com"]}, "Subject": "SNS-Subscriber-Endpoint", "Body": {"text_part": "S3 Bucket 'my-unencrypted-bucket' is unencrypted", "html_part": null}}
+```
 
+
+
+#####
 To test StepFunction Error Handling { provided empty input to step function which will fail the lambda and stepfunction will do the error handling
 ```bash
 aws --endpoint-url=http://localhost:4566 stepfunctions start-execution \
@@ -310,11 +318,6 @@ aws --endpoint-url=http://localhost:4566 stepfunctions get-execution-history \
   --execution-arn <EXECUTION_ARN>
 ```
 
-You can verify the alert has been sent by looking at the path volume/tmp//state/ses/ . You can cat the json file and see the ouput as mentioned below
-###Output
-```bash
-{"Id": "mxfthwwscyulscvr-hcxdfclb-vfxy-aglj-oovq-knnvxluzlvds-erzqjg", "Timestamp": "2025-09-22T09:59:42", "Region": "eu-central-1", "Source": "admin@localstack.com", "Destination": {"ToAddresses": ["awssecops123@gmail.com"]}, "Subject": "SNS-Subscriber-Endpoint", "Body": {"text_part": "S3 Bucket 'my-unencrypted-bucket' is unencrypted", "html_part": null}}
-```
 
 ### CLOUDFORMATION TASK
 
