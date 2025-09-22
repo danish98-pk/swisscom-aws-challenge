@@ -24,7 +24,7 @@ cd swisscom-aws-challenge/aws-engineering-assessment
 ---
 
 #### ❓ Why AWS CLI v1?  
-LocalStack offers  more stable support for AWS CLI v1
+LocalStack seems to me have more stable support for AWS CLI v1 
 
 ---
 
