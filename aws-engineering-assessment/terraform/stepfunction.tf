@@ -30,8 +30,8 @@ resource "aws_iam_role_policy" "sfn_policy" {
 
 resource "null_resource" "file_workflow" {
   provisioner "local-exec" {
-    command = "aws --endpoint-url=http://localhost:4566 stepfunctions create-state-machine --name FileUploadWorkflow --role-arn ${aws_iam_role.sfn_role.arn} --definition '{\"Comment\":\"File metadata workflow\",\"StartAt\":\"WriteMetadata\",\"States\":{\"WriteMetadata\":{\"Type\":\"Task\",\"Resource\":\"${aws_lambda_function.write_metadata.arn}\",\"End\":true}}}'"
-  }
+    command = "aws --endpoint-url=http://localhost:4566 stepfunctions create-state-machine --name FileUploadWorkflow --role-arn ${aws_iam_role.sfn_role.arn} --definition '{\"Comment\":\"File metadata workflow with error handling\",\"StartAt\":\"WriteMetadata\",\"States\":{\"WriteMetadata\":{\"Type\":\"Task\",\"Resource\":\"${aws_lambda_function.write_metadata.arn}\",\"Catch\":[{\"ErrorEquals\":[\"ValidationError\",\"ProcessingError\",\"States.ALL\"],\"Next\":\"HandleError\"}],\"End\":true},\"HandleError\":{\"Type\":\"Fail\",\"Error\":\"FileProcessingFailed\",\"Cause\":\"Error occurred in Lambda while writing metadata\"}}}'"
 
   depends_on = [aws_lambda_function.write_metadata]
 }
+
