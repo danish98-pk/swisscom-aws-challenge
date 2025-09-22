@@ -195,6 +195,9 @@ Unit tests for Lambdas:
 
 To run unit test . Make sure you have pytest installed . you can install it using pip
 ```bash
+cd lambdas/src/
+```
+```bash
 pytest test_check_encryption_lambda.py -v -s 
 pytest test_starter_lambda.py -v -s
 pytest test_write_metadata_lambda.py -v -s
