@@ -303,13 +303,13 @@ You can verify the alert has been sent by looking at the path volume/tmp//state/
 The cloudformation Template has been updated with new features:
 
 - **Main S3 Bucket**
-  - Server-side encryption using AES256
+  - encryption
   - Logging enabled to a dedicated logging bucket
   - Fine-grained bucket policy restricting access to the account only
 
 - **Logging Bucket**
   - Dedicated bucket to store access logs for the main bucket
-  - Server-side encryption using AES256
+  - encryption
   - Bucket policy allows logging service  to write logs
 
 
