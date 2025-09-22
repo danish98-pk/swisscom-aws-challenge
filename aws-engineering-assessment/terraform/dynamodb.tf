@@ -77,13 +77,6 @@ resource "aws_kms_key" "dynamodb_key" {
 
 
 
-#LocalStack making things worst for now , leveraging null resource { provisioner method}
-# resource "null_resource" "dynamodb_table" {
-#   provisioner "local-exec" {
-#     command = "aws --endpoint-url=http://localhost:4566 dynamodb create-table --table-name file-metadata --attribute-definitions AttributeName=Filename,AttributeType=S --key-schema AttributeName=Filename,KeyType=HASH --billing-mode PAY_PER_REQUEST  --sse-specification Enabled=true,SSEType=KMS,KMSMasterKeyId=${aws_kms_key.dynamodb_key.arn}"
-#   }
-# }
-
 resource "null_resource" "dynamodb_table" {
   provisioner "local-exec" {
     command = "aws --endpoint-url=http://localhost:4566 dynamodb create-table --cli-input-json '${jsonencode(local.dynamodb_table_definition)}'"

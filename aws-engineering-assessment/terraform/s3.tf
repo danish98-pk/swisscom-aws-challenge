@@ -14,8 +14,7 @@ locals {
 }
 
 
-#scoped down the lambda use of kms keys
-
+#scoped down
 resource "aws_kms_key" "s3_key" {
   description = "KMS key for S3 bucket encryption"
 
@@ -70,13 +69,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "uploads_sse" {
 
 # Null resource to apply lifecycle configuration via AWS CLI { Somehow the LocalStack is not liking lifecycle configuration resource type block , we have to do it another way by using aws cli command}
 #https://docs.aws.amazon.com/cli/latest/reference/s3api/put-bucket-lifecycle-configuration.html
-# resource "null_resource" "s3_lifecycle" {
-#   depends_on = [aws_s3_bucket.uploads]
-
-#   provisioner "local-exec" {
-#     command = "aws --endpoint-url=http://localhost:4566 s3api put-bucket-lifecycle-configuration --bucket ${aws_s3_bucket.uploads.id} --lifecycle-configuration '{\"Rules\":[{\"ID\":\"expire-old-objects\",\"Status\":\"Enabled\",\"Filter\":{},\"Expiration\":{\"Days\":90}}]}'"
-#   }
-# }
 
 resource "null_resource" "s3_lifecycle" {
   depends_on = [aws_s3_bucket.uploads]
