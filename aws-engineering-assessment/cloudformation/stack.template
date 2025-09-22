@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation template for creating AWS S3 Buckets with logging and secure policies
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: Name for S3 bucket (must begin and end with a letter or number and consist only of lowercase letters, numbers, and hyphens (-))
+    AllowedPattern: (?=^.{3,63}$)^[a-z0-9][a-z0-9-]*[a-z0-9]
+    ConstraintDescription: Name must begin and end with a letter or number and consist only of lowercase letters, numbers, and hyphens (-)
+
+Resources:
+
+  # Main bucket
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: !Sub "${BucketName}-s3"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref S3BucketLogging
+        LogFilePrefix: !Sub "logs/${BucketName}/"
+
+  # Logging bucket
+  S3BucketLogging:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${BucketName}-logs"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  # Policy for main bucket
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Fn::Sub: |
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "s3:PutObject",
+                  "s3:GetObject",
+                  "s3:ListBucket",
+                  "s3:GetBucketAcl",
+                  "s3:PutObjectAcl"
+                ],
+                "Resource": [
+                  "arn:aws:s3:::${S3Bucket}",
+                  "arn:aws:s3:::${S3Bucket}/*"
+                ],
+                "Principal": {
+                  "AWS": ["${AWS::AccountId}"]
+                }
+              }
+            ]
+          }     
+
+  # Policy for logging bucket (S3 logging service only)
+  LoggingBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3BucketLogging
+      PolicyDocument:
+        Fn::Sub: |
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": "s3:PutObject",
+                "Principal": {
+                  "Service": "logging.s3.amazonaws.com"
+                },
+                "Resource": [
+                  "arn:aws:s3:::${S3BucketLogging}",
+                  "arn:aws:s3:::${S3BucketLogging}/*"
+                ],
+                "Condition": {
+                  "ArnLike": {
+                    "aws:SourceArn": "${S3Bucket.Arn}"
+                  },
+                  "StringEquals": {
+                    "aws:SourceAccount": "${AWS::AccountId}"
+                  }
+                }
+              }
+            ]
+          }
+
+Outputs:
+  BucketARN:
+    Description: The ARN for the main bucket that got created
+    Value: !GetAtt S3Bucket.Arn
+
+  LoggingBucketARN:
+    Description: The ARN for the logging bucket
+    Value: !GetAtt S3BucketLogging.Arn
