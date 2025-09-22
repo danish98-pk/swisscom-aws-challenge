@@ -1,13 +1,23 @@
-#step function definition
 locals {
   file_workflow_definition = jsonencode({
-    Comment = "File metadata workflow"
+    Comment = "File metadata workflow with error handling"
     StartAt = "WriteMetadata"
     States = {
       WriteMetadata = {
         Type     = "Task"
         Resource = aws_lambda_function.write_metadata.arn
-        End      = true
+        Catch = [
+          {
+            ErrorEquals = ["States.ALL"] 
+            Next        = "HandleError"
+          }
+        ]
+        End = true
+      }
+      HandleError = {
+        Type  = "Fail"
+        Error = "FileProcessingFailed"
+        Cause = "lambda causing problems, error alert :O"
       }
     }
   })
