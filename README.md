@@ -163,7 +163,7 @@ Creates SNS topic and email subscription:
 
 Step Function execution role.  
 null_resource.file_workflow — Creates Step Function using AWS CLI with `WriteMetadata` task pointing to `write_metadata_lambda`.  
-Step Function flow:  `write_metadata_lambda`.
+setup error handling
 
 ---
 
@@ -290,6 +290,24 @@ list sns
 ```bash
  aws --endpoint-url=http://localhost:4566 sns list-topics \
   --region eu-central-1
+```
+
+To test StepFunction Error Handling { provided empty input to step function which will fail the lambda and stepfunction will do the error handling
+```bash
+aws --endpoint-url=http://localhost:4566 stepfunctions start-execution \
+  --state-machine-arn arn:aws:states:eu-central-1:000000000000:stateMachine:FileUploadWorkflow \
+  --name test-validation-error \
+  --input '{}'
+```
+List down the failed stepfunction to check the error handling , grab the execution arn of it and paste it in this command
+```bash
+aws --endpoint-url=http://localhost:4566 stepfunctions describe-execution \
+  --execution-arn <EXECUTION_ARN>
+```
+You can also list all events from this failed execution arn
+```bash
+aws --endpoint-url=http://localhost:4566 stepfunctions get-execution-history \
+  --execution-arn <EXECUTION_ARN>
 ```
 
 You can verify the alert has been sent by looking at the path volume/tmp//state/ses/ . You can cat the json file and see the ouput as mentioned below
