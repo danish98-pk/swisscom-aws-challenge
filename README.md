@@ -3,8 +3,8 @@
 Start by cloning this repository to your Ubuntu Machine . This project has been tested on Ubuntu
 
 ```bash
-git clone https://github.com/danish98-pk/swisscom-aws-engineering-assessment.git
-cd swisscom-aws-engineering-assessment/aws-engineering-assessment
+git clone https://github.com/danish98-pk/swisscom-aws-challenge.git
+cd swisscom-aws-challenge/aws-engineering-assessment
 ```
 
 > **⚠️ Note:**  
