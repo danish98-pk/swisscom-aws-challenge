@@ -19,6 +19,9 @@ python3 -m venv "$VENV_NAME"
 echo "Upgrading pip inside virtual environment."
 "$VENV_NAME/bin/pip" install --upgrade pip
 
+
+"$VENV_NAME/bin/pip" install pytest
+
 echo "Installing AWS CLI v1..."
 "$VENV_NAME/bin/pip" install "awscli<2.0"
 
