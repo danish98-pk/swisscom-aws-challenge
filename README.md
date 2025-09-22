@@ -15,11 +15,12 @@ cd swisscom-aws-challenge/aws-engineering-assessment
 
 
 #### 📌 What  Setup.sh  does  
-1. **Creates a Python virtual environment** named `awscli_venv` to isolate dependencies.  
-2. **Upgrades pip** to the latest version inside the virtual environment.  
-3. **Installs AWS CLI v1** (`awscli<2.0`) in the virtual environment.  
-4. **Activates the virtual environment** so you can immediately use AWS CLI v1.
-5. This is required to run Null resources using local-exec as a terraform wrapper for running aws cli commands to provision Dynamodb table and Step function
+1. **Creates a Python virtual environment** named `awscli_venv` to isolate dependencies.
+2. **Installs python3 and pip3
+3. **Upgrades pip** to the latest version inside the virtual environment.  
+4. **Installs AWS CLI v1** (`awscli<2.0`) in the virtual environment.  
+5. **Activates the virtual environment** so you can immediately use AWS CLI v1.
+6. This is required to run Null resources using local-exec as a terraform wrapper for running aws cli commands to provision Dynamodb table and Step function
 
 ---
 
