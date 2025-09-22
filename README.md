@@ -193,7 +193,7 @@ Unit tests for Lambdas:
 - `test_starter_lambda.py` — Ensures Step Function is triggered properly.  
 - `test_write_metadata_lambda.py` — Confirms metadata is correctly written to DynamoDB.
 
-To run unit test . Make sure you have pytest installed . you can install it using pip
+To run unit test.
 ```bash
 cd lambdas/src/
 ```
