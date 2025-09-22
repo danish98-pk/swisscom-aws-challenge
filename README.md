@@ -193,7 +193,7 @@ Unit tests for Lambdas:
 - `test_starter_lambda.py` — Ensures Step Function is triggered properly.  
 - `test_write_metadata_lambda.py` — Confirms metadata is correctly written to DynamoDB.
 
-To run unit test.
+To run unit test. Under terraform folder switch to lambdas/src/
 ```bash
 cd lambdas/src/
 ```
