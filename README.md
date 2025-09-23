@@ -7,21 +7,14 @@ git clone https://github.com/danish98-pk/swisscom-aws-challenge.git
 cd swisscom-aws-challenge/aws-engineering-assessment
 ```
 
-> **⚠️ Note:**  
-> If you already have **AWS CLI v1** installed, you can skip the Prerequisites  steps and directly go to  **Setup Terraform Infrastructure ** section.
-
 #### ✅ Prerequisites  
----
-
-
 #### 📌 What  Setup.sh  does  
 1. **Creates a Python virtual environment** named `awscli_venv` to isolate dependencies.
 2. Installs python3 and pip3
-3. **Upgrades pip** to the latest version inside the virtual environment.  
-4. **Installs AWS CLI v1** (`awscli<2.0`) in the virtual environment.  
-5. **Activates the virtual environment** so you can immediately use AWS CLI v1.
-6. This is required to run Null resources using local-exec as a terraform wrapper for running aws cli commands to provision Dynamodb table and Step function
+3. **Installs AWS CLI
+4. **Activates the virtual environment** so you can immediately use AWS CLI
 
+> **Note:** This is required to run `null_resource` using `local-exec` as a Terraform wrapper for executing AWS CLI commands to provision a DynamoDB table and Step Function.
 ---
 
 #### ❓ Why AWS CLI v1?  
