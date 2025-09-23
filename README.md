@@ -94,7 +94,8 @@ deactivate
 
 
 ## Arhcitecture Diagram 
-<img width="1251" height="715" alt="image" src="https://github.com/user-attachments/assets/45216bc1-2ea8-4122-8238-942ff1eb9a00" />
+<img width="1227" height="737" alt="image" src="https://github.com/user-attachments/assets/863dedf8-7ba6-4272-8b5f-e921413001d8" />
+
 
 ## 🛠 Terraform Infrastructure Overview
 
