@@ -22,7 +22,7 @@ echo "Upgrading pip inside virtual environment."
 
 "$VENV_NAME/bin/pip" install pytest
 
-echo "Installing AWS CLI v1..."
+echo "Installing AWS CLI"
 "$VENV_NAME/bin/pip" install "awscli<2.0"
 
 
