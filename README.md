@@ -17,10 +17,6 @@ cd swisscom-aws-challenge/aws-engineering-assessment
 > **Note:** This is required to run `null_resource` using `local-exec` as a Terraform wrapper for executing AWS CLI commands to provision a DynamoDB table and Step Function.
 ---
 
-#### ❓ Why AWS CLI v1?  
-LocalStack seems to me have more stable support for AWS CLI v1 
-
----
 
 #### ▶️ Usage  
 
