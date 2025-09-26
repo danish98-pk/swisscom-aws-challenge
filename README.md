@@ -315,6 +315,8 @@ aws --endpoint-url=http://localhost:4566 stepfunctions get-execution-history \
 
 ### CLOUDFORMATION TASK
 
+
+
 The cloudformation Template has been updated with new features:
 
 - **Main S3 Bucket**
@@ -326,6 +328,15 @@ The cloudformation Template has been updated with new features:
   - Dedicated bucket to store access logs for the main bucket
   - encryption
   - Bucket policy allows logging service  to write logs
+ 
+# To run Cloudfomration Project
+
+- Make sure to run setup.sh script like we did for the terraform project under aws-engineering-assessment folder.
+- Run Setup fake credentials step
+- Run docker-compose installation step if not installed
+
+
+
 
 
 
