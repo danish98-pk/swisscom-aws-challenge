@@ -334,6 +334,7 @@ The cloudformation Template has been updated with new features:
 - Make sure to run setup.sh script like we did for the terraform project under aws-engineering-assessment folder to avoid package conflicts.
 - Run Setup fake credentials step.
 - Run docker-compose installation step if not installed.
+- Run the required aws localstack cli commands to setup cft in the cloudfomration folder
 
 
 
