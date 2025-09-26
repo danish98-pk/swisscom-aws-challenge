@@ -40,9 +40,9 @@ aws --endpoint-url http://localhost:4566 cloudformation create-stack --stack-nam
 ## CFN-NAG Report
 ### Show last report
 ```shell
-docker logs cfn-nag
+sudo docker logs cfn-nag
 ```
 ### Recreate report
 ```shell
-docker-compose restart cfn-nag
+sudo docker-compose restart cfn-nag
 ```
