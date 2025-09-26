@@ -335,6 +335,7 @@ The cloudformation Template has been updated with new features:
 - Run Setup fake credentials step.
 - Run docker-compose installation step if not installed.
 - Run the required aws localstack cli commands to setup cft in the cloudfomration folder
+- after testing run deactivate command to destroy virtual environment
 
 
 
