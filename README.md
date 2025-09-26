@@ -329,7 +329,7 @@ The cloudformation Template has been updated with new features:
   - encryption
   - Bucket policy allows logging service  to write logs
  
-# To run Cloudfomration Project
+# To run Cloudformation Project
 
 - Make sure to run setup.sh script like we did for the terraform project under aws-engineering-assessment folder to avoid package conflicts.
 - Run Setup fake credentials step.
